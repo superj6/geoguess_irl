@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './login.dart';
 import './register.dart';
 import './auth_about.dart';
+import './play.dart';
 
 class AuthHomeScreen extends StatelessWidget{
   const AuthHomeScreen({super.key});
@@ -84,7 +85,23 @@ class AuthHomeScreen extends StatelessWidget{
 		  ],
 		),
               ),
-              SizedBox(),
+	      ElevatedButton(
+		onPressed: (){
+		  Navigator.push(
+		    context,
+		    MaterialPageRoute(builder: (context) => PlayScreen()),
+		  );
+		},
+		child: Text(
+		  'Play Anonymous',
+		  style: TextStyle(
+		    color: Colors.white,
+		  ),
+		),
+		style: ButtonStyle(
+		  backgroundColor: MaterialStatePropertyAll<Color>(Colors.green),
+		),
+	      ),
               SizedBox(),
               TextButton(
                 onPressed: (){
