@@ -11,6 +11,7 @@ class AuthHomeScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: Container(
         width: double.infinity,
@@ -30,7 +31,7 @@ class AuthHomeScreen extends StatelessWidget{
                   Text(
                     'Geoguess irl',
                     style: TextStyle(
-		      color: Colors.blue,
+		      color: Colors.blue.shade300,
 		      fontSize: 50,
 		      fontWeight: FontWeight.bold,
 		    ), 
@@ -38,7 +39,7 @@ class AuthHomeScreen extends StatelessWidget{
                   Text(
                     'Explore your world.',
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.blue.shade300,
                     ),
                   ),
                 ],
@@ -58,11 +59,11 @@ class AuthHomeScreen extends StatelessWidget{
 		      child: Text(
                         'Login',
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: Colors.blue.shade50,
                         ),
                       ),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue.shade700),
                       ),
 		    ),
 		    ElevatedButton(
@@ -75,11 +76,11 @@ class AuthHomeScreen extends StatelessWidget{
 		      child: Text(
                         'Register',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.blue.shade50,
                         ),
                       ),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green),
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
                       ),
 		    ),
 		  ],
@@ -95,11 +96,11 @@ class AuthHomeScreen extends StatelessWidget{
 		child: Text(
 		  'Play Anonymous',
 		  style: TextStyle(
-		    color: Colors.white,
+		    color: Colors.blue.shade50,
 		  ),
 		),
 		style: ButtonStyle(
-		  backgroundColor: MaterialStatePropertyAll<Color>(Colors.green),
+		  backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
 		),
 	      ),
               SizedBox(),

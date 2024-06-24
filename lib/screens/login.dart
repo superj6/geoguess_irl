@@ -18,19 +18,27 @@ class _LoginScreen extends State<LoginScreen>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.green,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.green.shade900,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        forceMaterialTransparency: true,
+        iconTheme: IconThemeData(
+          color: Colors.blue.shade50,
+        ),
+      ),
       body: SafeArea(
         child: Column(
-	  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 	  children: [
 	    Text(
               'Welcome Back!', 
               style: TextStyle(
-                color: Colors.blue,
+                color: Colors.blue.shade300,
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(height: 32.0),
             Padding(
               padding: EdgeInsets.all(16),
 	      child: Form(
@@ -38,11 +46,27 @@ class _LoginScreen extends State<LoginScreen>{
 		child: Column(
 		  crossAxisAlignment: CrossAxisAlignment.stretch,
 		  children: [
+                    Text('Account Information',
+                      style: TextStyle(color: Colors.blueGrey.shade300),
+                    ),
 		    TextFormField(
                       autofocus: true,
                       controller: usernameController,
-		      decoration: const InputDecoration(
+                      style: TextStyle(color: Colors.blue.shade50),
+                      cursorColor: Colors.green.shade700,
+		      decoration: InputDecoration(
 			hintText: 'Username',
+                        hintStyle: TextStyle(color: Colors.blueGrey.shade300),
+                        enabledBorder: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue.shade600),
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey.shade700,
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: Colors.blueGrey.shade300,
+                        ),
 		      ),
 		      validator: (String? value) {
 			if (value == null || value.isEmpty) {
@@ -57,8 +81,21 @@ class _LoginScreen extends State<LoginScreen>{
                       obscureText: true,
 		      enableSuggestions: false,
 		      autocorrect: false,
-		      decoration: const InputDecoration(
+                      style: TextStyle(color: Colors.blue.shade50),
+                      cursorColor: Colors.green.shade700,
+                      decoration: InputDecoration(
 			hintText: 'Password',
+                        hintStyle: TextStyle(color: Colors.blueGrey.shade300),
+                        enabledBorder: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue.shade600),
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey.shade700,
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Colors.blueGrey.shade300,
+                        ),
 		      ),
 		      validator: (String? value) {
 			if (value == null || value.isEmpty) {
@@ -77,21 +114,20 @@ class _LoginScreen extends State<LoginScreen>{
                           ).then((_) => Navigator.pop(context));
 			}
 		      },
-		      child: const Text('Login'),
+		      child: Text(
+                        'Login',
+                        style: TextStyle(color: Colors.blue.shade50),
+                      ),
+
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
+                      ),
 		    ),
 		  ],
 		),
 	      ),
             ),
-            SizedBox(),
-            SizedBox(),
-            TextButton(
-              onPressed: (){
-                Navigator.pop(context);
-              },
-              child: Text('Go back.'),
-            ),
-	  ], 
+          ], 
 	),
       ),
     );

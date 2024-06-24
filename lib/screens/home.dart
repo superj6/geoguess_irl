@@ -12,12 +12,13 @@ class HomeScreen extends StatelessWidget{
   Widget build(BuildContext context){
     User currentUser = context.watch<UserProvider>().currentUser!;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/earth_background.jpg'),        
+            image: AssetImage('assets/images/earth_moon_background.jpg'),        
             fit: BoxFit.cover,
           ),
         ),
@@ -31,15 +32,27 @@ class HomeScreen extends StatelessWidget{
                   Text(
                     'Geoguess irl',
                     style: TextStyle(
-		      color: Colors.blue,
+		      color: Colors.blue.shade300,
 		      fontSize: 50,
 		      fontWeight: FontWeight.bold,
 		    ), 
                   ),
-                  Text(
-                    'Hello ${currentUser.username}',
-                    style: TextStyle(
-                      color: Colors.blue,
+                  RichText(
+                    text: TextSpan(
+		      style: TextStyle(
+			color: Colors.blue.shade300,
+		      ),
+                      children: [
+                        TextSpan(text: 'Hello '),
+                        TextSpan(
+                          text: '${currentUser.username!}',
+                          style: TextStyle(
+                            color: Colors.blue.shade50,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(text: ' :)'),
+                      ],
                     ),
                   ),
                 ],
@@ -59,11 +72,11 @@ class HomeScreen extends StatelessWidget{
 		      child: Text(
                         'Play',
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: Colors.blue.shade50,
                         ),
                       ),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue.shade700),
                       ),
 		    ),
 		    ElevatedButton(
@@ -76,11 +89,11 @@ class HomeScreen extends StatelessWidget{
 		      child: Text(
                         'Stats',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.blue.shade50,
                         ),
                       ),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green),
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
                       ),
 		    ),
 		    ElevatedButton(
@@ -90,11 +103,11 @@ class HomeScreen extends StatelessWidget{
 		      child: Text(
                         'Rules',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.blue.shade50,
                         ),
                       ),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green),
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
                       ),
 		    ),
 		  ],
