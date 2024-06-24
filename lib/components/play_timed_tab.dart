@@ -30,12 +30,14 @@ class PlayTimedTab extends StatelessWidget{
     return Center(
       child: SingleChildScrollView(
 	child: Column(
-	  mainAxisAlignment: MainAxisAlignment.center,
+	  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 	  children: [
 	    Text(
 	      'Timed Game',
 	      style: TextStyle(
 		fontSize: 40,
+                color: Colors.blue.shade300,
+                fontWeight: FontWeight.bold,
 	      ),
 	    ),
 	    GridView.count(
@@ -60,9 +62,13 @@ class PlayTimedTab extends StatelessWidget{
 		      shape: RoundedRectangleBorder(
 			borderRadius: BorderRadius.zero,
 		      ),
+                      backgroundColor: Colors.green.shade700,
 		    ),
 		    onPressed: () => startGame(context, timeLimit, radiusLimit),
-		    child: Text('${timeLimit} ${radiusLimit}'),
+		    child: Text(
+                      '${timeLimit} ${radiusLimit}',
+                      style: TextStyle(color: Colors.blue.shade50),
+                    ),
 		  ),
 		);
 	      }).toList(),
@@ -82,8 +88,14 @@ class PlayTimedTab extends StatelessWidget{
 			    FilteringTextInputFormatter.digitsOnly
 			  ],
 			  controller: timeLimitController,
-			  decoration: const InputDecoration(
+                          style: TextStyle(color: Colors.blue.shade50),
+                          cursorColor: Colors.green.shade700,
+			  decoration: InputDecoration(
 			    hintText: 'Time Limit',
+                            hintStyle: TextStyle(color: Colors.blueGrey.shade300),
+                            focusedBorder: UnderlineInputBorder(
+			      borderSide: BorderSide(color: Colors.blue.shade600),
+			    ), 
 			  ),
 			  validator: (String? value) {
 			    if (value == null || value.isEmpty) {
@@ -99,8 +111,14 @@ class PlayTimedTab extends StatelessWidget{
 			    FilteringTextInputFormatter.digitsOnly
 			  ],
 			  controller: radiusLimitController,
-			  decoration: const InputDecoration(
+                          style: TextStyle(color: Colors.blue.shade50),
+                          cursorColor: Colors.green.shade700,
+			  decoration: InputDecoration(
 			    hintText: 'Radius Limit',
+                            hintStyle: TextStyle(color: Colors.blueGrey.shade300),
+                            focusedBorder: UnderlineInputBorder(
+			      borderSide: BorderSide(color: Colors.blue.shade600),
+			    ), 
 			  ),
 			  validator: (String? value) {
 			    if (value == null || value.isEmpty) {
@@ -119,7 +137,13 @@ class PlayTimedTab extends StatelessWidget{
 			  startGame(context, timeLimit, radiusLimit);
 			}
 		      },
-		      child: Text('Custom'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green.shade700,
+                      ),
+		      child: Text(
+                        'Custom',
+                        style: TextStyle(color: Colors.blue.shade50),
+                      ),
 		    ),
 		  ],
 		),

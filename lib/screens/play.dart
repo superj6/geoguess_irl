@@ -23,20 +23,36 @@ class _PlayScreen extends State<PlayScreen>{
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Play Game'),
-          backgroundColor: Colors.blue,
-          bottom: const TabBar(
+          iconTheme: IconThemeData(color: Colors.blue.shade50),
+          title: Text(
+            'Play',
+            style: TextStyle(
+              color: Colors.blue.shade300,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.blueGrey.shade900,
+          toolbarHeight: 32.0,
+          bottom: TabBar(
+            dividerColor: Colors.transparent,
+            indicatorColor: Colors.blue.shade300,
             tabs: [
               Tab(
-                icon: Icon(Icons.timer),
+                icon: Icon(
+                  Icons.timer,
+                  color: Colors.blue.shade50,
+                ),
               ),
               Tab(
-                icon: Icon(Icons.watch),
+                icon: Icon(
+                  Icons.watch,
+                  color: Colors.blue.shade50,
+                ),
               ),
             ],
           ),
         ),
-	backgroundColor: Colors.green,
+	backgroundColor: Colors.green.shade900,
 	body: TabBarView(
 	  children: [
             PlayTimedTab(),

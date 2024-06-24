@@ -55,7 +55,7 @@ class _RegisterScreen extends State<RegisterScreen>{
                       controller: usernameController,
                       style: TextStyle(color: Colors.blue.shade50),
                       cursorColor: Colors.green.shade700,
-	              decoration: InputDecoration(
+		      decoration: InputDecoration(
 			hintText: 'Username',
                         hintStyle: TextStyle(color: Colors.blueGrey.shade300),
                         enabledBorder: OutlineInputBorder(),
