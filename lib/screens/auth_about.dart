@@ -72,7 +72,9 @@ class AuthAboutScreen extends StatelessWidget{
 	      ],
 	    ),
             SizedBox(height: 16.0),
-            Text('It is recommended to create an account in order to track your stats over time and see how you compare to other players. However, you can also play anonymously from the authentication screen. You can also view more comprehensive rules below.'),
+            Text(
+              'It is recommended to create an account in order to track your stats over time and see how you compare to other players. However, you can also play anonymously from the authentication screen. You can also view more comprehensive rules below.'
+            ),
             SizedBox(height: 16.0),
             SizedBox(
 	      width: 256.0,

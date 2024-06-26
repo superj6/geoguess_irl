@@ -36,10 +36,13 @@ class PlayTimedTab extends StatelessWidget{
 	      'Timed Game',
 	      style: Theme.of(context).textTheme.headlineLarge,
 	    ),
+            Text(
+              'Either pick a predefined time limit/radius pair or enter a custom pair to start.'
+            ),
+            SizedBox(height: 16.0),
 	    GridView.count(
 	      shrinkWrap: true,
 	      primary: false,
-	      padding: const EdgeInsets.all(20),
 	      crossAxisSpacing: 10,
 	      mainAxisSpacing: 10,
 	      crossAxisCount: 3,
@@ -60,68 +63,69 @@ class PlayTimedTab extends StatelessWidget{
 		      ),
 		    ),
 		    onPressed: () => startGame(context, timeLimit, radiusLimit),
-		    child: Text('${timeLimit} ${radiusLimit}'),
+		    child: Text('${timeLimit}min ${radiusLimit}m'),
 		  ),
 		);
 	      }).toList(),
 	    ),
-            Padding(
-              padding: EdgeInsets.all(16.0),
-	      child: Form(
-		key: _formKey,
-		child: Column( 
-		  children: [
-		    Column(
-		      children: [
-			TextFormField(
-			  scrollPadding: EdgeInsets.only(bottom: 128),
-			  keyboardType: TextInputType.number,
-			  inputFormatters: <TextInputFormatter>[
-			    FilteringTextInputFormatter.digitsOnly
-			  ],
-			  controller: timeLimitController,
-			  decoration: InputDecoration(
-			    hintText: 'Time Limit',
-			  ),
-			  validator: (String? value) {
-			    if (value == null || value.isEmpty) {
-			      return 'Time limit required';
-			    }
-			    return null;
-			  },
+            SizedBox(height: 16.0),
+            Form(
+	      key: _formKey,
+	      child: Column( 
+		children: [
+		  Column(
+		    children: [
+		      TextFormField(
+			scrollPadding: EdgeInsets.only(bottom: 128),
+			keyboardType: TextInputType.number,
+			inputFormatters: <TextInputFormatter>[
+			  FilteringTextInputFormatter.digitsOnly
+			],
+			controller: timeLimitController,
+			decoration: InputDecoration(
+			  hintText: 'Time Limit',
 			),
-			TextFormField(
-			  scrollPadding: EdgeInsets.only(bottom: 64),
-			  keyboardType: TextInputType.number,
-			  inputFormatters: <TextInputFormatter>[
-			    FilteringTextInputFormatter.digitsOnly
-			  ],
-			  controller: radiusLimitController,
-			  decoration: InputDecoration(
-			    hintText: 'Radius Limit',
-			  ),
-			  validator: (String? value) {
-			    if (value == null || value.isEmpty) {
-			      return 'Radius limit required';
-			    }
-			    return null;
-			  },
+			validator: (String? value) {
+			  if (value == null || value.isEmpty) {
+			    return 'Time limit required';
+			  }
+			  return null;
+			},
+		      ),
+		      TextFormField(
+			scrollPadding: EdgeInsets.only(bottom: 64),
+			keyboardType: TextInputType.number,
+			inputFormatters: <TextInputFormatter>[
+			  FilteringTextInputFormatter.digitsOnly
+			],
+			controller: radiusLimitController,
+			decoration: InputDecoration(
+			  hintText: 'Radius Limit',
 			),
-		      ],
+			validator: (String? value) {
+			  if (value == null || value.isEmpty) {
+			    return 'Radius limit required';
+			  }
+			  return null;
+			},
+		      ),
+		    ],
+		  ),
+		  ElevatedButton(
+		    onPressed: (){
+		      if (_formKey.currentState!.validate()) {
+			int timeLimit = int.parse(timeLimitController.text);
+			int radiusLimit = int.parse(radiusLimitController.text);
+			startGame(context, timeLimit, radiusLimit);
+		      }
+		    },
+		    child: Text('Custom'),
+		    style: ElevatedButton.styleFrom(
+		      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
 		    ),
-		    ElevatedButton(
-		      onPressed: (){
-			if (_formKey.currentState!.validate()) {
-			  int timeLimit = int.parse(timeLimitController.text);
-			  int radiusLimit = int.parse(radiusLimitController.text);
-			  startGame(context, timeLimit, radiusLimit);
-			}
-		      },
-		      child: Text('Custom'),
-		    ),
-		  ],
-		),
-              ),
+		  ),
+		],
+	      ),
 	    ),
 	  ],
 	),

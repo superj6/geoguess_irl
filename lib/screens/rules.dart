@@ -21,7 +21,9 @@ class RulesScreen extends StatelessWidget{
 	      style: Theme.of(context).textTheme.headlineLarge, 
 	    ),
             SizedBox(height: 16.0),
-            Text('There are two game modes you can play: Timed and Completion. In both of these game modes you select a playing radius, are given images from a random location within this radius, and are tasked with finding the location closes to the images given irl. You must physically walk to the guessed location and your submission is based off your final gps locationi.'),
+            Text(
+              'There are two game modes you can play: Timed and Completion. In both of these game modes you select a playing radius, are given images from a random location within this radius, and are tasked with finding the location closes to the images given irl. You must physically walk to the guessed location and your submission is based off your final gps locationi.'
+            ),
             SizedBox(height: 16.0),
 	    ElevatedButton(
 	      onPressed: (){

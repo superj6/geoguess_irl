@@ -32,12 +32,15 @@ class _PlayScreen extends State<PlayScreen>{
             ],
           ),
         ),
-	body: TabBarView(
-	  children: [
-            PlayTimedTab(),
-            PlayTimedTab(),
-          ],
-	),
+	body: SafeArea(
+          minimum: EdgeInsets.symmetric(horizontal: 16.0),
+          child: TabBarView(
+	    children: [
+              PlayTimedTab(),
+              PlayTimedTab(),
+            ],
+	  ),
+        ),
       ),
     );
   }
