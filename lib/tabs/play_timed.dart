@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../services/game.dart';
 import '../services/auth.dart';
-import './game.dart';
-import './game_end.dart';
+import '../screens/game.dart';
+import '../screens/game_end.dart';
 
 class PlayTimedTab extends StatelessWidget{
   PlayTimedTab({super.key});

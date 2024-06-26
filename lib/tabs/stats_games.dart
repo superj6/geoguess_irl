@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../services/game.dart';
 import '../services/auth.dart';
-import './game_end.dart';
+import '../screens/game_end.dart';
 
 class StatsTab extends StatefulWidget{
   const StatsTab({super.key});

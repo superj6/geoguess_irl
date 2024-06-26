@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../services/game.dart';
 import '../services/auth.dart';
-import './stats_games_tab.dart';
+import '../tabs/stats_games.dart';
 import './game.dart';
 import './game_end.dart';
 
