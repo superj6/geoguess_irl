@@ -25,6 +25,7 @@ class _LoginScreen extends State<LoginScreen>{
         forceMaterialTransparency: true,
       ),
       body: SafeArea(
+        minimum: EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
 	  children: [
 	    Text(
@@ -32,63 +33,60 @@ class _LoginScreen extends State<LoginScreen>{
               style: Theme.of(context).textTheme.headlineLarge,
             ),
             SizedBox(height: 32.0),
-            Padding(
-              padding: EdgeInsets.all(16),
-	      child: Form(
-		key: _formKey,
-		child: Column(
-		  crossAxisAlignment: CrossAxisAlignment.stretch,
-		  children: [
-                    Text('Account Information',
-                      style: Theme.of(context).textTheme.labelLarge,
-                    ),
-		    TextFormField(
-                      autofocus: true,
-                      controller: usernameController,
-		      decoration: AuthInputDecoration(
-                        hintText: 'Username',
-                        iconData: Icons.person,
-                      ),
-		      validator: (String? value) {
-			if (value == null || value.isEmpty) {
-			  return 'Please enter your username';
-			}
-			return null;
-		      },
+	    Form(
+	      key: _formKey,
+	      child: Column(
+		crossAxisAlignment: CrossAxisAlignment.stretch,
+		children: [
+		  Text('Account Information',
+		    style: Theme.of(context).textTheme.labelLarge,
+		  ),
+		  TextFormField(
+		    autofocus: true,
+		    controller: usernameController,
+		    decoration: AuthInputDecoration(
+		      hintText: 'Username',
+		      iconData: Icons.person,
 		    ),
-                    SizedBox(height: 10),
-		    TextFormField(
-                      controller: passwordController,
-                      obscureText: true,
-		      enableSuggestions: false,
-		      autocorrect: false,
-                      decoration: AuthInputDecoration(
-                        hintText: 'Password',
-                        iconData: Icons.lock,
-		      ),
-		      validator: (String? value) {
-			if (value == null || value.isEmpty) {
-			  return 'Please enter your password';
-			}
-			return null;
-		      },
+		    validator: (String? value) {
+		      if (value == null || value.isEmpty) {
+			return 'Please enter your username';
+		      }
+		      return null;
+		    },
+		  ),
+		  SizedBox(height: 10),
+		  TextFormField(
+		    controller: passwordController,
+		    obscureText: true,
+		    enableSuggestions: false,
+		    autocorrect: false,
+		    decoration: AuthInputDecoration(
+		      hintText: 'Password',
+		      iconData: Icons.lock,
 		    ),
-                    SizedBox(height: 10),
-		    ElevatedButton(
-		      onPressed: () {
-			if (_formKey.currentState!.validate()) {
-                          context.read<UserProvider>().loginUser(
-                            username: usernameController.text,
-                            password: passwordController.text,
-                          ).then((_) => Navigator.pop(context));
-			}
-		      },
-		      child: Text('Login'),
-		    ),
-		  ],
-		),
+		    validator: (String? value) {
+		      if (value == null || value.isEmpty) {
+			return 'Please enter your password';
+		      }
+		      return null;
+		    },
+		  ),
+		  SizedBox(height: 10),
+		  ElevatedButton(
+		    onPressed: () {
+		      if (_formKey.currentState!.validate()) {
+			context.read<UserProvider>().loginUser(
+			  username: usernameController.text,
+			  password: passwordController.text,
+			).then((_) => Navigator.pop(context));
+		      }
+		    },
+		    child: Text('Login'),
+		  ),
+		],
 	      ),
-            ),
+	    ),
           ], 
 	),
       ),

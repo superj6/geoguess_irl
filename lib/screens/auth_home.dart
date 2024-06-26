@@ -21,6 +21,7 @@ class AuthHomeScreen extends StatelessWidget{
           ),
         ),
 	child: SafeArea(
+          minimum: EdgeInsets.symmetric(horizontal: 16.0),
 	  child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 	    crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,35 +38,32 @@ class AuthHomeScreen extends StatelessWidget{
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.all(16.0),
-		child: Column(
-		  crossAxisAlignment: CrossAxisAlignment.stretch,
-		  children: [
-		    ElevatedButton(
-		      onPressed: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginScreen()),
-                        );
-                      }, 
-		      child: Text('Login'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-                      ),
+              Column(
+		crossAxisAlignment: CrossAxisAlignment.stretch,
+		children: [
+		  ElevatedButton(
+		    onPressed: (){
+		      Navigator.push(
+			context,
+			MaterialPageRoute(builder: (context) => LoginScreen()),
+		      );
+		    }, 
+		    child: Text('Login'),
+		    style: ElevatedButton.styleFrom(
+		      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
 		    ),
-		    ElevatedButton(
-		      onPressed: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => RegisterScreen()),
-                        );
-                      },
-		      child: Text('Register'),
-		    ),
-		  ],
-		),
-              ),
+		  ),
+		  ElevatedButton(
+		    onPressed: (){
+		      Navigator.push(
+			context,
+			MaterialPageRoute(builder: (context) => RegisterScreen()),
+		      );
+		    },
+		    child: Text('Register'),
+		  ),
+		],
+	      ),
 	      ElevatedButton(
 		onPressed: (){
 		  Navigator.push(

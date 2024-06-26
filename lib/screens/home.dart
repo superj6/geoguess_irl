@@ -4,6 +4,7 @@ import '../services/auth.dart';
 
 import './play.dart';
 import './stats.dart';
+import './rules.dart';
 
 class HomeScreen extends StatelessWidget{
   const HomeScreen({super.key});
@@ -22,6 +23,7 @@ class HomeScreen extends StatelessWidget{
           ),
         ),
 	child: SafeArea(
+	  minimum: EdgeInsets.symmetric(horizontal: 16.0),
 	  child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 	    crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,41 +52,41 @@ class HomeScreen extends StatelessWidget{
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.all(16.0),
-		child: Column(
-		  crossAxisAlignment: CrossAxisAlignment.stretch,
-		  children: [
-		    ElevatedButton(
-		      onPressed: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => PlayScreen()),
-                        );
-                      }, 
-		      child: Text('Play'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-                      ),
+              Column(
+		crossAxisAlignment: CrossAxisAlignment.stretch,
+		children: [
+		  ElevatedButton(
+		    onPressed: (){
+		      Navigator.push(
+			context,
+			MaterialPageRoute(builder: (context) => PlayScreen()),
+		      );
+		    }, 
+		    child: Text('Play'),
+		    style: ElevatedButton.styleFrom(
+		      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
 		    ),
-		    ElevatedButton(
-		      onPressed: (){ 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => StatsScreen()),
-                        );
-                      }, 
-		      child: Text('Stats'),
-		    ),
-		    ElevatedButton(
-		      onPressed: (){
-                      
-                      }, 
-		      child: Text('Rules'),
-		    ),
-		  ],
-		),
-              ),
+		  ),
+		  ElevatedButton(
+		    onPressed: (){ 
+		      Navigator.push(
+			context,
+			MaterialPageRoute(builder: (context) => StatsScreen()),
+		      );
+		    }, 
+		    child: Text('Stats'),
+		  ),
+		  ElevatedButton(
+		    onPressed: (){
+	              Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RulesScreen()),
+                      );	    
+		    }, 
+		    child: Text('Rules'),
+		  ),
+		],
+	      ),
               SizedBox(),
               SizedBox(),
               TextButton(
