@@ -6,5 +6,5 @@
 .pub-cache/
 .pub/
 /build/
-.swp
+*.swp
 .env

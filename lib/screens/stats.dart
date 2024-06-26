@@ -16,14 +16,15 @@ class StatsScreen extends StatelessWidget{
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 0,
+          title: Text('Stats'),
+          toolbarHeight: 32.0,
           bottom: const TabBar(
             tabs: [
               Tab(
-                icon: Icon(Icons.gamepad),
+                icon: Icon(Icons.person),
               ),
               Tab(
-                icon: Icon(Icons.auto_graph),
+                icon: Icon(Icons.people),
               ),
             ],
           ),
