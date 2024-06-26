@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
+import '../components/auth_input_decoration.dart';
 
 class RegisterScreen extends StatefulWidget{
   const RegisterScreen({ super.key });
@@ -20,24 +21,16 @@ class _RegisterScreen extends State<RegisterScreen>{
   Widget build(BuildContext context){
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.green.shade900,
       extendBodyBehindAppBar: true, 
       appBar: AppBar(
         forceMaterialTransparency: true,
-        iconTheme: IconThemeData(
-          color: Colors.blue.shade50,
-        ),
       ),
       body: SafeArea(
         child: Column(
 	  children: [
 	    Text(
               'Create Account', 
-              style: TextStyle(
-                color: Colors.blue.shade300,
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             SizedBox(height: 32.0),
             Padding(
@@ -48,26 +41,14 @@ class _RegisterScreen extends State<RegisterScreen>{
 		  crossAxisAlignment: CrossAxisAlignment.stretch,
 		  children: [
 	            Text('Account Information',
-                      style: TextStyle(color: Colors.blueGrey.shade300),
+                      style: Theme.of(context).textTheme.labelLarge,
                     ),
 		    TextFormField(
                       autofocus: true,
                       controller: usernameController,
-                      style: TextStyle(color: Colors.blue.shade50),
-                      cursorColor: Colors.green.shade700,
-		      decoration: InputDecoration(
+		      decoration: AuthInputDecoration(
 			hintText: 'Username',
-                        hintStyle: TextStyle(color: Colors.blueGrey.shade300),
-                        enabledBorder: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue.shade600),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey.shade700,
-                        prefixIcon: Icon(
-                          Icons.person,
-                          color: Colors.blueGrey.shade300,
-                        ),
+                        iconData: Icons.person,
 		      ),
 		      validator: (String? value) {
 			if (value == null || value.isEmpty) {
@@ -82,21 +63,9 @@ class _RegisterScreen extends State<RegisterScreen>{
 		      enableSuggestions: false,
 		      autocorrect: false,
                       controller: passwordController,
-		      style: TextStyle(color: Colors.blue.shade50),
-                      cursorColor: Colors.green.shade700,
-		      decoration: InputDecoration(
+		      decoration: AuthInputDecoration(
 			hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.blueGrey.shade300),
-                        enabledBorder: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue.shade600),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey.shade700,
-                        prefixIcon: Icon(
-                          Icons.lock,
-                          color: Colors.blueGrey.shade300,
-                        ),
+                        iconData: Icons.lock,
 		      ), 
 		      validator: (String? value) {
 			if (value == null || value.isEmpty) {
@@ -111,21 +80,9 @@ class _RegisterScreen extends State<RegisterScreen>{
 		      enableSuggestions: false,
 		      autocorrect: false,
                       controller: confirmPasswordController,
-		      style: TextStyle(color: Colors.blue.shade50),
-                      cursorColor: Colors.green.shade700,
-		      decoration: InputDecoration(
+		      decoration: AuthInputDecoration(
 			hintText: 'Confirm Password',
-                        hintStyle: TextStyle(color: Colors.blueGrey.shade300),
-                        enabledBorder: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue.shade600),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey.shade700,
-                        prefixIcon: Icon(
-                          Icons.lock_outline,
-                          color: Colors.blueGrey.shade300,
-                        ),
+                        iconData: Icons.lock_outline,
 		      ),
 		      validator: (String? value) {
 			if (value == null || value.isEmpty || passwordController.text != confirmPasswordController.text) {
@@ -144,13 +101,7 @@ class _RegisterScreen extends State<RegisterScreen>{
                           ).then((_) => Navigator.pop(context));
 			}
 		      },
-		      child: Text(
-                        'Register',
-                        style: TextStyle(color: Colors.blue.shade50),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
-                      ),
+		      child: Text('Register'),
 		    ),
 		  ],
 		),

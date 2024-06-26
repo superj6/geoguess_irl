@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../services/game.dart';
 import '../services/auth.dart';
-import '../components/play_timed_tab.dart';
+import './play_timed_tab.dart';
 import './game.dart';
 import './game_end.dart';
 
@@ -23,36 +23,15 @@ class _PlayScreen extends State<PlayScreen>{
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.blue.shade50),
-          title: Text(
-            'Play',
-            style: TextStyle(
-              color: Colors.blue.shade300,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.blueGrey.shade900,
+          title: Text('Play'),
           toolbarHeight: 32.0,
           bottom: TabBar(
-            dividerColor: Colors.transparent,
-            indicatorColor: Colors.blue.shade300,
             tabs: [
-              Tab(
-                icon: Icon(
-                  Icons.timer,
-                  color: Colors.blue.shade50,
-                ),
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.watch,
-                  color: Colors.blue.shade50,
-                ),
-              ),
+              Tab(icon: Icon(Icons.timer)),
+              Tab(icon: Icon(Icons.watch)),
             ],
           ),
         ),
-	backgroundColor: Colors.green.shade900,
 	body: TabBarView(
 	  children: [
             PlayTimedTab(),

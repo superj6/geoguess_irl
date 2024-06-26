@@ -25,17 +25,11 @@ class AuthAboutScreen extends StatelessWidget{
 	        children: [
                   Text(
                     'Geoguess irl',
-                    style: TextStyle(
-		      color: Colors.blue,
-		      fontSize: 50,
-		      fontWeight: FontWeight.bold,
-		    ), 
+                    style: Theme.of(context).textTheme.headlineLarge, 
                   ),
                   Text(
                     'Explore your own world.',
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ],
               ),
@@ -45,9 +39,7 @@ class AuthAboutScreen extends StatelessWidget{
                 },
                 child: Text(
                   'Go back.',
-                  style: TextStyle(
-                    color: Colors.green,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
               ),
 	    ],

@@ -73,17 +73,12 @@ class _GameEndScreen extends State<GameEndScreen>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.green,
       body: SafeArea(
         child: Column(
 	  children: [
 	    Text(
               'Game Ended!', 
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             Row(
               children: [

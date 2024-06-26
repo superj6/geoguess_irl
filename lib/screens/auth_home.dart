@@ -12,7 +12,6 @@ class AuthHomeScreen extends StatelessWidget{
   Widget build(BuildContext context){
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.black,
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -30,17 +29,11 @@ class AuthHomeScreen extends StatelessWidget{
 	        children: [
                   Text(
                     'Geoguess irl',
-                    style: TextStyle(
-		      color: Colors.blue.shade300,
-		      fontSize: 50,
-		      fontWeight: FontWeight.bold,
-		    ), 
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   Text(
                     'Explore your world.',
-                    style: TextStyle(
-                      color: Colors.blue.shade300,
-                    ),
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ],
               ),
@@ -56,14 +49,9 @@ class AuthHomeScreen extends StatelessWidget{
                           MaterialPageRoute(builder: (context) => LoginScreen()),
                         );
                       }, 
-		      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          color: Colors.blue.shade50,
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue.shade700),
+		      child: Text('Login'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
                       ),
 		    ),
 		    ElevatedButton(
@@ -73,15 +61,7 @@ class AuthHomeScreen extends StatelessWidget{
                           MaterialPageRoute(builder: (context) => RegisterScreen()),
                         );
                       },
-		      child: Text(
-                        'Register',
-                        style: TextStyle(
-                          color: Colors.blue.shade50,
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
-                      ),
+		      child: Text('Register'),
 		    ),
 		  ],
 		),
@@ -93,15 +73,7 @@ class AuthHomeScreen extends StatelessWidget{
 		    MaterialPageRoute(builder: (context) => PlayScreen()),
 		  );
 		},
-		child: Text(
-		  'Play Anonymous',
-		  style: TextStyle(
-		    color: Colors.blue.shade50,
-		  ),
-		),
-		style: ButtonStyle(
-		  backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
-		),
+		child: Text('Play Anonymous'),
 	      ),
               SizedBox(),
               TextButton(
@@ -113,9 +85,7 @@ class AuthHomeScreen extends StatelessWidget{
                 },
                 child: Text(
                   'What is this app?',
-                  style: TextStyle(
-                    color: Colors.green,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
               ),
 	    ],

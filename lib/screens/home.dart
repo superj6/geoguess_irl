@@ -13,7 +13,6 @@ class HomeScreen extends StatelessWidget{
     User currentUser = context.watch<UserProvider>().currentUser!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.black,
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -31,23 +30,17 @@ class HomeScreen extends StatelessWidget{
 	        children: [
                   Text(
                     'Geoguess irl',
-                    style: TextStyle(
-		      color: Colors.blue.shade300,
-		      fontSize: 50,
-		      fontWeight: FontWeight.bold,
-		    ), 
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   RichText(
                     text: TextSpan(
-		      style: TextStyle(
-			color: Colors.blue.shade300,
-		      ),
+		      style: Theme.of(context).textTheme.headlineSmall,
                       children: [
                         TextSpan(text: 'Hello '),
                         TextSpan(
                           text: '${currentUser.username!}',
                           style: TextStyle(
-                            color: Colors.blue.shade50,
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -69,14 +62,9 @@ class HomeScreen extends StatelessWidget{
                           MaterialPageRoute(builder: (context) => PlayScreen()),
                         );
                       }, 
-		      child: Text(
-                        'Play',
-                        style: TextStyle(
-                          color: Colors.blue.shade50,
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue.shade700),
+		      child: Text('Play'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
                       ),
 		    ),
 		    ElevatedButton(
@@ -86,29 +74,13 @@ class HomeScreen extends StatelessWidget{
                           MaterialPageRoute(builder: (context) => StatsScreen()),
                         );
                       }, 
-		      child: Text(
-                        'Stats',
-                        style: TextStyle(
-                          color: Colors.blue.shade50,
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
-                      ),
+		      child: Text('Stats'),
 		    ),
 		    ElevatedButton(
 		      onPressed: (){
                       
                       }, 
-		      child: Text(
-                        'Rules',
-                        style: TextStyle(
-                          color: Colors.blue.shade50,
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
-                      ),
+		      child: Text('Rules'),
 		    ),
 		  ],
 		),
@@ -121,9 +93,7 @@ class HomeScreen extends StatelessWidget{
                 },
                 child: Text(
                   'logout :(',
-                  style: TextStyle(
-                    color: Colors.green,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
               ),
 	    ],

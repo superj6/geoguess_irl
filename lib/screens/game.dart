@@ -91,17 +91,12 @@ class _GameScreen extends State<GameScreen>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.green,
       body: SafeArea(
         child: Column(
 	  children: [
 	    Text(
               'Game Started!', 
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             Row(
               children: [

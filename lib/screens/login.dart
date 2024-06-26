@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
+import '../components/auth_input_decoration.dart';
 
 class LoginScreen extends StatefulWidget{
   const LoginScreen({ super.key });
@@ -19,24 +20,16 @@ class _LoginScreen extends State<LoginScreen>{
   Widget build(BuildContext context){
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.green.shade900,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         forceMaterialTransparency: true,
-        iconTheme: IconThemeData(
-          color: Colors.blue.shade50,
-        ),
       ),
       body: SafeArea(
         child: Column(
 	  children: [
 	    Text(
               'Welcome Back!', 
-              style: TextStyle(
-                color: Colors.blue.shade300,
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             SizedBox(height: 32.0),
             Padding(
@@ -47,27 +40,15 @@ class _LoginScreen extends State<LoginScreen>{
 		  crossAxisAlignment: CrossAxisAlignment.stretch,
 		  children: [
                     Text('Account Information',
-                      style: TextStyle(color: Colors.blueGrey.shade300),
+                      style: Theme.of(context).textTheme.labelLarge,
                     ),
 		    TextFormField(
                       autofocus: true,
                       controller: usernameController,
-                      style: TextStyle(color: Colors.blue.shade50),
-                      cursorColor: Colors.green.shade700,
-		      decoration: InputDecoration(
-			hintText: 'Username',
-                        hintStyle: TextStyle(color: Colors.blueGrey.shade300),
-                        enabledBorder: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue.shade600),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey.shade700,
-                        prefixIcon: Icon(
-                          Icons.person,
-                          color: Colors.blueGrey.shade300,
-                        ),
-		      ),
+		      decoration: AuthInputDecoration(
+                        hintText: 'Username',
+                        iconData: Icons.person,
+                      ),
 		      validator: (String? value) {
 			if (value == null || value.isEmpty) {
 			  return 'Please enter your username';
@@ -81,21 +62,9 @@ class _LoginScreen extends State<LoginScreen>{
                       obscureText: true,
 		      enableSuggestions: false,
 		      autocorrect: false,
-                      style: TextStyle(color: Colors.blue.shade50),
-                      cursorColor: Colors.green.shade700,
-                      decoration: InputDecoration(
-			hintText: 'Password',
-                        hintStyle: TextStyle(color: Colors.blueGrey.shade300),
-                        enabledBorder: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue.shade600),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey.shade700,
-                        prefixIcon: Icon(
-                          Icons.lock,
-                          color: Colors.blueGrey.shade300,
-                        ),
+                      decoration: AuthInputDecoration(
+                        hintText: 'Password',
+                        iconData: Icons.lock,
 		      ),
 		      validator: (String? value) {
 			if (value == null || value.isEmpty) {
@@ -114,14 +83,7 @@ class _LoginScreen extends State<LoginScreen>{
                           ).then((_) => Navigator.pop(context));
 			}
 		      },
-		      child: Text(
-                        'Login',
-                        style: TextStyle(color: Colors.blue.shade50),
-                      ),
-
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green.shade700),
-                      ),
+		      child: Text('Login'),
 		    ),
 		  ],
 		),

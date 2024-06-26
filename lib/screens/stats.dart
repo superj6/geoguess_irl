@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../services/game.dart';
 import '../services/auth.dart';
-import '../components/stats_games_tab.dart';
+import './stats_games_tab.dart';
 import './game.dart';
 import './game_end.dart';
 
@@ -17,7 +17,6 @@ class StatsScreen extends StatelessWidget{
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 0,
-          backgroundColor: Colors.blue,
           bottom: const TabBar(
             tabs: [
               Tab(
@@ -29,7 +28,6 @@ class StatsScreen extends StatelessWidget{
             ],
           ),
         ),
-	backgroundColor: Colors.green,
 	body: TabBarView(
 	  children: [
             StatsTab(),

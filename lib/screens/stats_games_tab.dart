@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../services/game.dart';
 import '../services/auth.dart';
-import '../screens/game_end.dart';
+import './game_end.dart';
 
 class StatsTab extends StatefulWidget{
   const StatsTab({super.key});
@@ -29,9 +29,7 @@ class _StatsTab extends State<StatsTab>{
       children: [
 	Text(
 	  'stats',
-	  style: TextStyle(
-	    fontSize: 40,
-	  ),
+	  style: Theme.of(context).textTheme.headlineLarge,
         ),
         FutureBuilder<List<Game>>(
           future: gamesFuture,
