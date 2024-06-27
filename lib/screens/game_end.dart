@@ -74,24 +74,29 @@ class _GameEndScreen extends State<GameEndScreen>{
   Widget build(BuildContext context){
     return Scaffold(
       body: SafeArea(
+        minimum: EdgeInsets.only(top: 32.0),
         child: Column(
 	  children: [
+            SizedBox(height: 16.0),
 	    Text(
               'Game Ended!', 
               style: Theme.of(context).textTheme.headlineLarge,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text('Radius Limit: ${game.radiusLimit}m'),
                 Text('Time Limit: ${game.timeLimit}min'),
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text('Start Time: ${DateFormat("hh:mm:ss").format(game.startTime!)}'),
                 Text('End Time: ${DateFormat("hh:mm:ss").format(game.endTime!)}'),
               ],
             ),
+            SizedBox(height: 16.0),
             StreamBuilder<Position>(
               stream: positionStream,
               builder: (context, snapshot){

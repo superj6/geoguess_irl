@@ -29,12 +29,15 @@ class StatsScreen extends StatelessWidget{
             ],
           ),
         ),
-	body: TabBarView(
-	  children: [
-            StatsTab(),
-            StatsTab(),
-          ],
-	),
+	body: SafeArea(
+          minimum: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
+          child: TabBarView(
+	    children: [
+              StatsTab(),
+              StatsTab(),
+            ],
+	  ),
+        ),
       ),
     );
   }

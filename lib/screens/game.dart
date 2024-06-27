@@ -92,13 +92,16 @@ class _GameScreen extends State<GameScreen>{
   Widget build(BuildContext context){
     return Scaffold(
       body: SafeArea(
+        minimum: EdgeInsets.only(top: 32.0),
         child: Column(
 	  children: [
+            SizedBox(height: 16.0),
 	    Text(
               'Game Started!', 
               style: Theme.of(context).textTheme.headlineLarge,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text('Radius Limit: ${game.radiusLimit}m'),
                 Text('Time Limit: ${game.timeLimit}min'),
@@ -110,7 +113,7 @@ class _GameScreen extends State<GameScreen>{
 		if(!snapshot.hasData){
 		  return Column(
 		    children: [
-		      Text('${game.timeLimit}:00'),
+		      Text('Time Left: ${game.timeLimit}:00'),
 		      SizedBox(
 			width: 300,
 			height: 300,
@@ -121,12 +124,18 @@ class _GameScreen extends State<GameScreen>{
 		}
 		return Column(
 		  children: [
-		    TimerCountdown(
-		      format: CountDownTimerFormat.minutesSeconds,
-		      endTime: game.startTime!.add(Duration(minutes: game.timeLimit)),
-		      enableDescriptions: false,
-		      spacerWidth: 0,
-		    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Time Left: '),
+			TimerCountdown(
+			  format: CountDownTimerFormat.minutesSeconds,
+			  endTime: game.startTime!.add(Duration(minutes: game.timeLimit)),
+			  enableDescriptions: false,
+			  spacerWidth: 0,
+			),
+                      ],
+                    ),
 		    CarouselSlider(
 		      options: CarouselOptions(height: 300.0),
 		      items: [0, 90, 180, 270].map((i){ 
@@ -165,6 +174,7 @@ class _GameScreen extends State<GameScreen>{
 		);
 	      },
 	    ),
+            SizedBox(height: 16.0),
             StreamBuilder<Position>(
               stream: positionStream,
               builder: (context, snapshot){
