@@ -33,7 +33,7 @@ class _PlayScreen extends State<PlayScreen>{
           ),
         ),
 	body: SafeArea(
-          minimum: EdgeInsets.symmetric(horizontal: 16.0),
+          minimum: EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
           child: TabBarView(
 	    children: [
               PlayTimedTab(),

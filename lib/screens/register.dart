@@ -20,8 +20,6 @@ class _RegisterScreen extends State<RegisterScreen>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true, 
       appBar: AppBar(
         forceMaterialTransparency: true,
       ),

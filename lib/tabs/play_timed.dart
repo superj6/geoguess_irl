@@ -28,7 +28,6 @@ class PlayTimedTab extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return SingleChildScrollView(
-      padding: EdgeInsets.only(top: 32.0),
       child: Column(
 	mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 	children: [
