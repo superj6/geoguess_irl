@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import '../services/game.dart';
 import '../services/auth.dart';
@@ -38,7 +39,9 @@ class _StatsTab extends State<StatsTab>{
               return CircularProgressIndicator();
             }
             List<Game> games = snapshot.data!;
+            games.sort((x, y) => x.startTime!.compareTo(y.startTime!));
             return ListView.builder(
+              reverse: true,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: games.length,
@@ -51,7 +54,31 @@ class _StatsTab extends State<StatsTab>{
                       MaterialPageRoute(builder: (context) => GameEndScreen(game: game)),
                     );
                   },
-                  child: Text('${game.gameId!}'),
+                  child: SizedBox(
+                    width: 216.0,
+		    child: Column(
+		      children: [
+                        Text(
+                          'Game ${index + 1}',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+			Row(
+			  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+			  children: [
+			    Text('${DateFormat.yMd().add_Hm().format(game.startTime!)}'),
+			    Text('Score: 69'),
+			  ],
+			),
+			Row(
+			  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+			  children: [
+			    Text('TL: ${game.timeLimit!}min'), 
+			    Text('RL: ${game.radiusLimit!}m'),
+			  ],
+			),
+		      ],
+		    ),
+                  ),
                 );
               },
             );

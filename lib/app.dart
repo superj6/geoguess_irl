@@ -49,6 +49,9 @@ class MyApp extends StatelessWidget {
               color: Colors.blue.shade300,
               fontWeight: FontWeight.bold,
             ),
+            titleSmall: TextStyle(
+              color: Colors.blue.shade300,
+            ),
             labelLarge: TextStyle(
               color: Colors.blueGrey.shade300,
             ),
