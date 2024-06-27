@@ -65,7 +65,7 @@ class AuthAboutScreen extends StatelessWidget{
 			style: TextStyle(fontWeight: FontWeight.bold),
 		      ),
 		      TextSpan(
-			text: ' differs in that the player has to perform actions irl. Specifically, in this game the player is given a picture from Google Earth within a radius relative to them, and then they are tasked to find this location irl by walking to the guessed location. The guessed location is then submitted from the final gps location of the player and scored based on distance to the actual image location.',
+			text: ' differs in that the player has to perform actions irl. Specifically, in this game the player is given a picture from Google Earth within a radius relative to them, and then they are tasked to find this location irl by physically walking to the guessed location.',
 		      ),
 		    ],
 		  ),
@@ -78,7 +78,7 @@ class AuthAboutScreen extends StatelessWidget{
             ),
             SizedBox(height: 16.0),
             SizedBox(
-	      width: 256.0,
+	      width: 216.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
 		children: [
