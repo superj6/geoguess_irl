@@ -32,12 +32,16 @@ class PlayTimedTab extends StatelessWidget{
 	child: Column(
 	  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 	  children: [
-	    Text(
-	      'Timed Game',
-	      style: Theme.of(context).textTheme.headlineLarge,
-	    ),
-            Text(
-              'Either pick a predefined time limit/radius pair or enter a custom pair to start.'
+            Column(
+              children: [
+		Text(
+		  'Timed Game',
+		  style: Theme.of(context).textTheme.headlineLarge,
+		),
+		Text(
+		  'Either pick a predefined time limit/radius pair or enter a custom pair to start.'
+		),
+              ],
             ),
             SizedBox(height: 16.0),
 	    GridView.count(

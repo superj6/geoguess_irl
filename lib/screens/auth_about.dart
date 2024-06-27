@@ -53,6 +53,7 @@ class AuthAboutScreen extends StatelessWidget{
 		    ],
 		  ),
 		),
+                SizedBox(height: 4.0),
 	        Text.rich(
 		  TextSpan(
 		    children: [
