@@ -11,7 +11,7 @@ import 'dart:math';
 import '../services/auth.dart';
 import '../services/gps.dart';
 import '../services/game.dart';
-import './game_end.dart';
+import './game_review.dart';
 
 class GameScreen extends StatefulWidget{
   final Game game;
@@ -36,7 +36,7 @@ class _GameScreen extends State<GameScreen>{
   @override
   void initState(){
     super.initState();
-    User currentUser = context.read<UserProvider>().currentUser!;
+    User? currentUser = context.read<UserProvider>().currentUser;
     
     positionStream = getCurrentLocation();
     positionStream.first.then((pos){
@@ -77,12 +77,21 @@ class _GameScreen extends State<GameScreen>{
     };
   }
 
+
+  void quitGame(context){
+    gameFuture.future.then((_){
+      game.quit().then((_){
+        Navigator.pop(context);
+      });
+    });
+  }
+
   void finishGame(context){
     gameFuture.future.then((_){
       game.submit(curPos!).then((_){
 	Navigator.pushReplacement(
 	  context,
-	  MaterialPageRoute(builder: (context) => GameEndScreen(game: game)),
+	  MaterialPageRoute(builder: (context) => GameReviewScreen(game: game)),
 	);
       });
     });
@@ -91,6 +100,7 @@ class _GameScreen extends State<GameScreen>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         minimum: EdgeInsets.only(top: 32.0),
         child: Column(
@@ -197,9 +207,41 @@ class _GameScreen extends State<GameScreen>{
 		);
               }
             ),
-            ElevatedButton(
-              onPressed: () => finishGame(context),
-              child: Text('Submit'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+		ElevatedButton(
+		  onPressed: () => finishGame(context),
+		  child: Text('Submit'),
+                  style: ElevatedButton.styleFrom(
+		    backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+		  ),
+		),
+		FutureBuilder(
+		  future: gameFuture.future.then((game){
+                    Duration durTime = game.startTime!
+                        .add(Duration(seconds: 15))
+                        .difference(DateTime.now());
+                    return Future.delayed(durTime);
+                  }),
+		  builder: (context, snapshot) {
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return ElevatedButton(
+                        onPressed: () => quitGame(context),
+                        child: Text('Quit'),
+                      );
+                    } 
+                               
+		    return ElevatedButton(
+		      onPressed: (){},
+		      child: Text('Quit'),
+                      style: ElevatedButton.styleFrom(
+		        backgroundColor: Theme.of(context).colorScheme.inverseSurface,
+		      ),
+		    );
+                  },
+		),
+              ],
             ),
 	  ], 
 	),

@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../services/game.dart';
 import '../services/auth.dart';
 import '../screens/game.dart';
-import '../screens/game_end.dart';
 
 class PlayTimedTab extends StatelessWidget{
   PlayTimedTab({super.key});
@@ -17,9 +16,10 @@ class PlayTimedTab extends StatelessWidget{
   void startGame(BuildContext context, int timeLimit, int radiusLimit){
     Game game = Game(
       timeLimit: timeLimit, 
-      radiusLimit: radiusLimit, 
+      radiusLimit: radiusLimit,
+      gameType: 'timed', 
     );
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => GameScreen(game: game))
     );
@@ -92,6 +92,10 @@ class PlayTimedTab extends StatelessWidget{
 			if (value == null || value.isEmpty) {
 			  return 'Time limit required';
 			}
+		        int timeLimit = int.parse(radiusLimitController.text);
+                        if(timeLimit < 1){
+                          return 'Radius limit must be at least 1';
+                        }
 			return null;
 		      },
 		    ),
@@ -109,6 +113,10 @@ class PlayTimedTab extends StatelessWidget{
 			if (value == null || value.isEmpty) {
 			  return 'Radius limit required';
 			}
+		        int radiusLimit = int.parse(radiusLimitController.text);
+                        if(radiusLimit < 50){
+                          return 'Radius limit must be at least 50';
+                        }
 			return null;
 		      },
 		    ),

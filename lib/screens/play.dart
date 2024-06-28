@@ -6,7 +6,6 @@ import '../services/game.dart';
 import '../services/auth.dart';
 import '../tabs/play_timed.dart';
 import './game.dart';
-import './game_end.dart';
 
 class PlayScreen extends StatefulWidget{
   const PlayScreen({super.key});

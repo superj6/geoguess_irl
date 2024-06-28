@@ -39,14 +39,14 @@ class RulesScreen extends StatelessWidget{
 			style: TextStyle(fontWeight: FontWeight.bold),
 		      ),
 		      TextSpan(
-			text: '. In both of these game modes you select a playing radius, are given Google Earth images from a random location within this radius, and are tasked with finding the location closest to the images given irl. You must physically walk to the guessed location and your submission is based off your final gps location.'
+			text: '. In both of these game modes you select a playing radius, are given Google Earth images from a random location within this radius, and are tasked with finding the location closest to the images given irl. You must physically walk to the guessed location and your submission is based off your final gps location. You are scored out of 1000.'
 		      ),
 		    ],
 		  ),
 		),
                 SizedBox(height: 4.0),
                 Text(
-                  'Your are only able to cancel the game within the first 15sec of starting. Information on the differences between game modes is below.'
+                  'You are only able to cancel the game within the first 15sec of starting. Information on the differences between game modes is below.'
                 ),
               ],
             ),
@@ -58,7 +58,7 @@ class RulesScreen extends StatelessWidget{
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
-                  'In this mode you have a time limit that you must give your best guess within. Your score is based only on the distance between the guessed location and actual image location.'
+                  'In this mode you have a time limit that you must give your best guess within. Your score is based on both the time taken out of the allotted and the distance between the guessed location and actual image location relative to the radius limit.'
                 ),
               ],
             ),
@@ -70,7 +70,7 @@ class RulesScreen extends StatelessWidget{
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
-                  'In this mode you have unlimitted time, but you must reach the exact location the provided image came from. Your score is based only on the amount of time it took to reach the location.'
+                  'In this mode you have unlimitted time, but you must reach the exact location the provided image came from. Your score is on the amount of time it took to reach the location relative to the radius limit.'
                 ),
               ],
             ),

@@ -2,7 +2,9 @@ import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 
 import 'dart:convert';
+import 'dart:math';
 
+import './gps.dart';
 import './url.dart';
 import './auth.dart';
 
@@ -16,6 +18,7 @@ class Game{
   DateTime? endTime;
   int radiusLimit;
   int timeLimit;
+  String gameType;
 
   Game({
     this.gameId,
@@ -27,35 +30,8 @@ class Game{
     this.endTime,
     required this.radiusLimit,
     required this.timeLimit,
+    required this.gameType,
   });
-
-  factory Game.fromJson(Map<String, dynamic> json){
-    return switch (json) {
-      {
-	'gameId': String gameId,
-	'groupId': String groupId,
-	'startPos': Map startPos,
-	'endPos': Map endPos,
-	'solPos': Map solPos,
-	'startTime': String startTime,
-	'endTime': String endTime,
-	'radiusLimit': int radiusLimit,
-	'timeLimit': int timeLimit,
-      } =>
-        Game(
-          gameId: gameId,
-          groupId: groupId,
-          startPos: Position.fromMap(startPos),
-          endPos: Position.fromMap(endPos),
-          solPos: Position.fromMap(solPos),
-          startTime: DateTime.parse(startTime),
-          endTime: DateTime.parse(endTime),
-          radiusLimit: radiusLimit,
-          timeLimit: timeLimit, 
-        ),
-      _ => throw const FormatException('Failed to load game.'),
-    };
-  }
 
   Game addJson(Map<String, dynamic> json) {
     if(json.containsKey('gameId')) gameId = json['gameId'];
@@ -65,36 +41,96 @@ class Game{
     if(json.containsKey('solPos')) solPos = Position.fromMap(json['solPos']);
     if(json.containsKey('startTime')) startTime = DateTime.parse(json['startTime']);
     if(json.containsKey('endTime')) endTime = DateTime.parse(json['endTime']);
-    if(json.containsKey('radiusLimit')) radiusLimit = json['radiusLimit'];
-    if(json.containsKey('timeLimit')) timeLimit = json['timeLimit'];
     return this;
+  }
+
+  factory Game.fromJson(Map<String, dynamic> json){
+    Game game = Game(
+      radiusLimit: json['radiusLimit'],
+      timeLimit: json['timeLimit'],
+      gameType: json['gameType'],
+    );
+    return game.addJson(json);
+  }
+
+  Duration timeTaken(){
+    return endTime!.difference(startTime!);
+  }
+
+  double timeRatio(){
+    double tTak = timeTaken().inSeconds.toDouble();
+    return tTak / timeLimit;
+  }
+
+  double distanceRatio(){
+    double dToSol = distanceBetweenPositions(endPos!, solPos!);
+    return dToSol / (2 * radiusLimit);
+  }
+
+  int timedScore(){
+    if(endPos == null) return -1;
+    double dRat = distanceRatio();
+    double tRat = timeRatio();
+    double score = exp(-tRat) * max(0, cos(dRat * pi)) * 1000;
+    return score.ceil(); 
+  }
+
+  int completionScore(){
+    double tTak = timeTaken().inSeconds.toDouble();
+    double score = exp(-tTak / radiusLimit) * 1000;
+    return score.ceil();
+  }
+
+  int score(){
+    if(gameType == 'timed'){
+      return timedScore(); 
+    }else if(gameType == 'completion'){
+      return completionScore();
+    }else{
+      return -1;
+    }
   }
 
   Map<String, dynamic> positionLoc(Position pos){
     return {'latitude': pos.latitude, 'longitude': pos.longitude};
   }
 
-  Future<Game> start(User currentUser) async{
+  Future<Game> start(User? currentUser) async{
     final response = await http.post(
       Uri.parse('${gameUrl}/api/game/new'),
       headers: <String, String>{
 	'Content-Type': 'application/json; charset=UTF-8',
-        'Cookie': currentUser.sessionCookie,
+        'Cookie': currentUser != null ? currentUser.sessionCookie! : '',
       },
       body: jsonEncode(<String, dynamic>{
 	'startPos': positionLoc(startPos!),
         'radiusLimit': radiusLimit,
         'timeLimit': timeLimit,
+        'gameType': gameType,
       }),
     );
 
     if (response.statusCode == 200) {
       return addJson(jsonDecode(response.body));
     } else {
-      throw Exception('Failed to load album');
+      throw Exception('Failed to start game');
     }
   }
 
+  Future<void> quit() async{
+    final response = await http.post(
+      Uri.parse('${gameUrl}/api/game/${gameId}/quit'),
+      headers: <String, String>{
+	'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return; 
+    } else {
+      throw Exception('Failed to quit game');
+    }
+  }
 
   Future<Game> submit(Position curPos) async{
     endPos = curPos;
@@ -111,7 +147,7 @@ class Game{
     if (response.statusCode == 200) {
       return addJson(jsonDecode(response.body)); 
     } else {
-      throw Exception('Failed to load album');
+      throw Exception('Failed to submit game');
     }
   }
 
@@ -119,7 +155,6 @@ class Game{
     return '${gameUrl}/api/game/${gameId}/image?direction=${direction}';
   }
 }
-
 
 Future<List<Game>> getUserGames(User currentUser) async{
   final response = await http.get(
@@ -130,8 +165,9 @@ Future<List<Game>> getUserGames(User currentUser) async{
   );
 
   if(response.statusCode == 200){
+    print(jsonDecode(response.body).map((data) => Game.fromJson(data))); 
     return List.from(jsonDecode(response.body).map((data) => Game.fromJson(data))); 
   }else{
-    throw Exception('Failed to load album');
+    throw Exception('Failed to get user games');
   }
 }

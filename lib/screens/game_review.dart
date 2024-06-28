@@ -10,20 +10,20 @@ import 'dart:math';
 import '../services/gps.dart';
 import '../services/game.dart';
 
-class GameEndScreen extends StatefulWidget{
+class GameReviewScreen extends StatefulWidget{
   final Game game;
-  const GameEndScreen({super.key, required this.game});
+  const GameReviewScreen({super.key, required this.game});
 
   @override
-  State<GameEndScreen> createState() => _GameEndScreen(game: game);
+  State<GameReviewScreen> createState() => _GameReviewScreen(game: game);
 }
 
-class _GameEndScreen extends State<GameEndScreen>{
+class _GameReviewScreen extends State<GameReviewScreen>{
   late Stream<Position> positionStream;
   Position? curPos;
   Game game;
 
-  _GameEndScreen({required this.game});
+  _GameReviewScreen({required this.game});
 
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   Set<Marker> _markers = {};
@@ -35,27 +35,33 @@ class _GameEndScreen extends State<GameEndScreen>{
     positionStream = getCurrentLocation();
   }
 
-  void updateMap(Position pos){
-    curPos = pos;
+  void updateMap(Position? pos){
+    curPos = pos ?? curPos;
 
     _markers = {
       Marker(
         markerId: MarkerId('start position'),
         position: LatLng(game.startPos!.latitude, game.startPos!.longitude),
       ),
-      Marker(
+    };
+    if(curPos != null){
+      _markers.add(Marker(
         markerId: MarkerId('current position'),
         position: LatLng(curPos!.latitude, curPos!.longitude),
-      ),
-      Marker(
-        markerId: MarkerId('end position'),
-        position: LatLng(game.endPos!.latitude, game.endPos!.longitude),
-      ),
-      Marker(
+      ));
+    }
+    if(game.endPos != null){
+      _markers.add(Marker(
+	markerId: MarkerId('end position'),
+	position: LatLng(game.endPos!.latitude, game.endPos!.longitude),
+      ));
+    }
+    if(game.solPos != null){
+      _markers.add(Marker(
         markerId: MarkerId('solution position'),
         position: LatLng(game.solPos!.latitude, game.solPos!.longitude),
-      ),
-    };
+      ));
+    }
     
     _circles = {
       Circle(
@@ -79,7 +85,7 @@ class _GameEndScreen extends State<GameEndScreen>{
 	  children: [
             SizedBox(height: 16.0),
 	    Text(
-              'Game Ended!', 
+              'Game Review', 
               style: Theme.of(context).textTheme.headlineLarge,
             ),
             Row(
@@ -92,22 +98,29 @@ class _GameEndScreen extends State<GameEndScreen>{
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text('Start Time: ${DateFormat("hh:mm:ss").format(game.startTime!)}'),
-                Text('End Time: ${DateFormat("hh:mm:ss").format(game.endTime!)}'),
+                Text('Start Time: ${DateFormat.Hms().format(game.startTime!)}'),
+                Text('End Time: ${game.solPos != null ? game.startTime!.compareTo(game.endTime!) < 0 ? DateFormat.Hms().format(game.endTime!) : "no submission :(" : "still playing..."}'),
               ],
+            ),
+            Text(
+              'Score: ${game.score()}',
+              style: TextStyle(
+                fontSize: 24, 
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 16.0),
             StreamBuilder<Position>(
               stream: positionStream,
               builder: (context, snapshot){
-                updateMap(snapshot.data ?? game.endPos!);
+                updateMap(snapshot.data ?? game.endPos);
 		return SizedBox(
 		  width: 300,
 		  height: 300,
 		  child: GoogleMap(
 		    mapType: MapType.hybrid,
 		    initialCameraPosition: CameraPosition(
-		      target: LatLng(game.startPos!.latitude, game.endPos!.longitude),
+		      target: LatLng(game.startPos!.latitude, game.startPos!.longitude),
 		      zoom: log(500.0 * pow(2, 15) / game.radiusLimit) / log(2),
 		    ),
 		    markers: _markers,
@@ -122,6 +135,9 @@ class _GameEndScreen extends State<GameEndScreen>{
             ElevatedButton(
               onPressed: () => goHome(context),
               child: Text('Finish'),
+              style: ElevatedButton.styleFrom(
+	        backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+              ),
             ),
 	  ], 
 	),

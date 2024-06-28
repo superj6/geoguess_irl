@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
             surface: Colors.green.shade700,
             onSurface: Colors.blue.shade50,
             surfaceVariant: Colors.blue.shade700,
+            inverseSurface: Colors.blueGrey.shade900,
           ),
           appBarTheme: AppBarTheme(
             foregroundColor: Colors.blue.shade300,
