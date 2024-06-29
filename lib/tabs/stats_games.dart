@@ -6,6 +6,7 @@ import 'package:fl_chart/fl_chart.dart';
 
 import 'dart:math';
 
+import '../components/games_overview.dart';
 import '../services/game.dart';
 import '../services/auth.dart';
 import '../screens/game_review.dart';
@@ -45,117 +46,14 @@ class _StatsTab extends State<StatsTab>{
 		    return CircularProgressIndicator();
 		  }
 		  List<Game> games = snapshot.data!;
-		  games.sort((x, y) => x.startTime!.compareTo(y.startTime!));
-                  Duration gameTimeDur = games.last.startTime!.difference(games.first.startTime!);
+                  
+                  List<Game> timedGames = games.where((game) => game.gameType == 'timed').toList();
+                  List<Game> completionGames = games.where((game) => game.gameType == 'completion').toList();
                   return Column(
                     children: [
-                      Builder(
-                        builder: (context){
-                          List<Game> timedGames = games.where((game) => game.gameType == 'timed').toList();
-                          List<FlSpot> gameScoreSpots = timedGames.map((game) => FlSpot(
-                            game.startTime!.millisecondsSinceEpoch.toDouble(), 
-                            game.score().toDouble(),
-                          )).toList();
-                          return Column(
-			    children: [
-			      Text(
-				'Timed',
-				style: Theme.of(context).textTheme.titleLarge,
-			      ),
-			      Row(
-				mainAxisAlignment: MainAxisAlignment.spaceAround,
-				children: [
-				  Text('Num Games: ${timedGames.length}'),
-				  Text('Avg Score: ${gameListScoreAvg(timedGames)}'),
-				],
-			      ),
-                              SizedBox(height: 8.0),
-		              Container(
-                                margin: EdgeInsets.only(right: 12.0), 
-				height: 178.0,
-				child: LineChart(
-				  LineChartData(
-
-                                    baselineX: games.first.startTime!.millisecondsSinceEpoch.toDouble(),
-                                    minX: games.first.startTime!.millisecondsSinceEpoch.toDouble(),
-                                    maxX: games.last.startTime!.millisecondsSinceEpoch.toDouble(),
-				    minY: 0,
-				    maxY: 1000, 
-				    gridData: FlGridData(
-				      verticalInterval: gameTimeDur.inMilliseconds / 4,
-                                      horizontalInterval: 1000 / 4,
-				    ),
-				    titlesData: FlTitlesData(
-				      topTitles: AxisTitles(
-					sideTitles: SideTitles(showTitles: false),
-				      ),
-				      rightTitles: AxisTitles(
-					sideTitles: SideTitles(showTitles: false),
-				      ),
-                                      bottomTitles: AxisTitles(
-					sideTitles: SideTitles(
-					  showTitles: true,
-                                          interval: gameTimeDur.inMilliseconds / 2,
-					  getTitlesWidget: (value, meta){
-                                            return SideTitleWidget(
-                                              axisSide: meta.axisSide,
-                                              child: Text(
-                                                '${DateFormat("M/d/yy").format(DateTime.fromMillisecondsSinceEpoch(value.toInt()))}',
-                                              ),
-                                              space: 4.0,
-                                              fitInside: SideTitleFitInsideData.fromTitleMeta(
-                                                meta,
-                                                distanceFromEdge: -12.0,
-                                              ),
-                                            );
-                                          },
-					),
-				      ),
-                                      leftTitles: AxisTitles(
-                                        sideTitles: SideTitles(
-                                          showTitles: true,
-                                          interval: 1000 / 2,
-                                          reservedSize: 48.0,
-                                          getTitlesWidget: (value, meta){
-                                            return SideTitleWidget(
-                                              axisSide: meta.axisSide,
-                                              child: Text('${value.toInt()}'),
-                                              space: 4.0,
-                                              fitInside: SideTitleFitInsideData.fromTitleMeta(
-                                                meta,
-                                                distanceFromEdge: -6.0,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-				    ),
-				    lineBarsData: [
-				      LineChartBarData(
-					spots: gameScoreSpots,
-				      ),
-				    ],
-				  ),
-                                ),
-                              ),
-			    ],
-		          );
-                        },
-                      ),
+                      GamesOverview(title: 'Timed', games: timedGames),
                       SizedBox(height: 8.0),
-                      Builder(
-                        builder: (context){
-                          List<Game> completionGames = games.where((game) => game.gameType == 'completion').toList();
-                          return Column(
-			    children: [
-			      Text(
-				'Completion',
-				style: Theme.of(context).textTheme.titleLarge,
-			      ),
-			    ],
-		          );
-                        },
-                      ),
+                      GamesOverview(title: 'Completion', games: completionGames),
                     ],
                   );  
                 },
@@ -170,13 +68,19 @@ class _StatsTab extends State<StatsTab>{
 		style: Theme.of(context).textTheme.headlineLarge,
 	      ), 
 	      Text('Click to view more details.'),
+              SizedBox(height: 8.0),
 	      FutureBuilder<List<Game>>(
 		future: gamesFuture,
 		builder: (context, snapshot){
 		  if(!snapshot.hasData){
 		    return CircularProgressIndicator();
 		  }
-		  List<Game> games = snapshot.data!;
+		  
+                  List<Game> games = snapshot.data!;
+                  if(games.isEmpty){
+                    return Text('No games played yet...');
+                  }
+
 		  games.sort((x, y) => x.startTime!.compareTo(y.startTime!));
 		  return ListView.builder(
 		    reverse: true,
