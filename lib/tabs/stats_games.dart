@@ -64,7 +64,7 @@ class _StatsTab extends State<StatsTab>{
           Column(
             children: [
 	      Text(
-		'Previous Games',
+		'Games',
 		style: Theme.of(context).textTheme.headlineLarge,
 	      ), 
 	      Text('Click to view more details.'),
