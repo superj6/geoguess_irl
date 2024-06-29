@@ -171,3 +171,7 @@ Future<List<Game>> getUserGames(User currentUser) async{
     throw Exception('Failed to get user games');
   }
 }
+
+double gameListScoreAvg(List<Game> games){
+  return games.fold(0, (sum, game) => sum + game.score()) / games.length;
+}
