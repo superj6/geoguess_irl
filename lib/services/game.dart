@@ -201,7 +201,6 @@ Future<List<Game>> getUserScores(User currentUser, String username) async{
   );
 
   if(response.statusCode == 200){
-    print(jsonDecode(response.body).map((data) => Game.fromJson(data))); 
     return List.from(jsonDecode(response.body).map((data) => Game.fromJson(data))); 
   }else{
     throw Exception('Failed to get user games');
