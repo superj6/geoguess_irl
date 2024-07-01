@@ -6,18 +6,17 @@ import '../services/game.dart';
 import '../services/auth.dart';
 import '../screens/game.dart';
 
-class PlayTimedTab extends StatelessWidget{
-  PlayTimedTab({super.key});
+class PlayCompletionTab extends StatelessWidget{
+  PlayCompletionTab({super.key});
   
   final _formKey = GlobalKey<FormState>();
-  TextEditingController timeLimitController = TextEditingController();
   TextEditingController radiusLimitController = TextEditingController();   
 
-  void startGame(BuildContext context, int timeLimit, int radiusLimit){
+  void startGame(BuildContext context, int radiusLimit){
     Game game = Game(
-      timeLimit: timeLimit, 
+      timeLimit: 0, 
       radiusLimit: radiusLimit,
-      gameType: 'timed', 
+      gameType: 'completion', 
     );
     Navigator.pushReplacement(
       context,
@@ -34,11 +33,11 @@ class PlayTimedTab extends StatelessWidget{
 	  Column(
 	    children: [
 	      Text(
-		'Timed Game',
+		'Completion Game',
 		style: Theme.of(context).textTheme.headlineLarge,
 	      ),
 	      Text(
-		'Either pick a predefined time limit/radius pair or enter a custom pair to start.'
+		'Either pick a predefined radius or enter a custom radius to start.'
 	      ),
 	    ],
 	  ),
@@ -48,13 +47,11 @@ class PlayTimedTab extends StatelessWidget{
 	    primary: false,
 	    crossAxisSpacing: 10,
 	    mainAxisSpacing: 10,
-	    crossAxisCount: 3,
+	    crossAxisCount: 2,
 	    children: [
-	      (1, 125), (5, 250), (10, 250),
-	      (10, 500), (15, 500), (20, 500),
-	      (10, 1000), (20, 1000), (30, 1000),
-	    ].map((rec){
-	      var (timeLimit, radiusLimit) = rec;
+	      125, 250,
+              500, 1000,
+	    ].map((radiusLimit){
 	      return SizedBox(
 		width: 125,
 		height: 125,
@@ -65,8 +62,8 @@ class PlayTimedTab extends StatelessWidget{
 		      borderRadius: BorderRadius.zero,
 		    ),
 		  ),
-		  onPressed: () => startGame(context, timeLimit, radiusLimit),
-		  child: Text('${timeLimit}min ${radiusLimit}m'),
+		  onPressed: () => startGame(context, radiusLimit),
+		  child: Text('${radiusLimit}m'),
 		),
 	      );
 	    }).toList(),
@@ -76,27 +73,6 @@ class PlayTimedTab extends StatelessWidget{
 	    key: _formKey,
 	    child: Column( 
 	      children: [
-		TextFormField(
-		  scrollPadding: EdgeInsets.only(bottom: 128),
-		  keyboardType: TextInputType.number,
-		  inputFormatters: <TextInputFormatter>[
-		    FilteringTextInputFormatter.digitsOnly
-		  ],
-		  controller: timeLimitController,
-		  decoration: InputDecoration(
-		    hintText: 'Time Limit',
-		  ),
-		  validator: (String? value) {
-		    if (value == null || value.isEmpty) {
-		      return 'Time limit required';
-		    }
-		    int timeLimit = int.parse(radiusLimitController.text);
-		    if(timeLimit < 1){
-		      return 'Time limit must be at least 1';
-		    }
-		    return null;
-		  },
-		),
 		TextFormField(
 		  scrollPadding: EdgeInsets.only(bottom: 64),
 		  keyboardType: TextInputType.number,
@@ -112,8 +88,8 @@ class PlayTimedTab extends StatelessWidget{
 		      return 'Radius limit required';
 		    }
 		    int radiusLimit = int.parse(radiusLimitController.text);
-		    if(radiusLimit < 75){
-		      return 'Radius limit must be at least 75m';
+		    if(radiusLimit < 50){
+		      return 'Radius limit must be at least 50';
 		    }
 		    return null;
 		  },
@@ -121,9 +97,8 @@ class PlayTimedTab extends StatelessWidget{
 		ElevatedButton(
 		  onPressed: (){
 		    if (_formKey.currentState!.validate()) {
-		      int timeLimit = int.parse(timeLimitController.text);
 		      int radiusLimit = int.parse(radiusLimitController.text);
-		      startGame(context, timeLimit, radiusLimit);
+		      startGame(context, radiusLimit);
 		    }
 		  },
 		  child: Text('Custom'),

@@ -70,7 +70,7 @@ class RulesScreen extends StatelessWidget{
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
-                  'In this mode you have unlimitted time, but you must reach the exact location the provided image came from. Your score is on the amount of time it took to reach the location relative to the radius limit.'
+                  'In this mode you have unlimitted time, but you must reach within 25m of the exact location the provided image came from. Your score is based only on the amount of time it took to reach the location relative to the radius limit. If you try to submit at the wrong location you get 0 points.'
                 ),
               ],
             ),

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../services/game.dart';
 import '../services/auth.dart';
 import '../tabs/play_timed.dart';
+import '../tabs/play_completion.dart';
 import './game.dart';
 
 class PlayScreen extends StatefulWidget{
@@ -36,7 +37,7 @@ class _PlayScreen extends State<PlayScreen>{
           child: TabBarView(
 	    children: [
               PlayTimedTab(),
-              PlayTimedTab(),
+              PlayCompletionTab(),
             ],
 	  ),
         ),

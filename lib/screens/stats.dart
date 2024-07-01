@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../services/game.dart';
 import '../services/auth.dart';
-import '../tabs/stats_games.dart';
+import '../tabs/stats_self.dart';
+import '../tabs/stats_lookup.dart';
 import './game.dart';
 
 class StatsScreen extends StatelessWidget{
@@ -32,8 +33,8 @@ class StatsScreen extends StatelessWidget{
           minimum: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
           child: TabBarView(
 	    children: [
-              StatsTab(),
-              StatsTab(),
+              StatsSelfTab(),
+              StatsLookupTab(),
             ],
 	  ),
         ),

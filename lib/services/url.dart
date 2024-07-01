@@ -1,2 +1,2 @@
 //const String gameUrl = "http://geoguess-irl.jgon.net";
-const String gameUrl = "https://56cc-74-213-45-234.ngrok-free.app";
+const String gameUrl = "https://21c0-108-255-248-133.ngrok-free.app";

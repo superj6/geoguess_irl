@@ -156,6 +156,10 @@ class Game{
   }
 }
 
+double gameListScoreAvg(List<Game> games){
+  return games.fold(0, (sum, game) => sum + game.score()) / games.length;
+}
+
 Future<List<Game>> getUserGames(User currentUser) async{
   final response = await http.get(
     Uri.parse('${gameUrl}/api/user/stats'),
@@ -172,6 +176,18 @@ Future<List<Game>> getUserGames(User currentUser) async{
   }
 }
 
-double gameListScoreAvg(List<Game> games){
-  return games.fold(0, (sum, game) => sum + game.score()) / games.length;
+Future<List<Game>> getUserScores(User currentUser, String username) async{
+  final response = await http.get(
+    Uri.parse('${gameUrl}/api/user/scores?username=${username}'),
+    headers: <String, String>{
+      'Cookie': currentUser.sessionCookie,
+    },
+  );
+
+  if(response.statusCode == 200){
+    print(jsonDecode(response.body).map((data) => Game.fromJson(data))); 
+    return List.from(jsonDecode(response.body).map((data) => Game.fromJson(data))); 
+  }else{
+    throw Exception('Failed to get user games');
+  }
 }

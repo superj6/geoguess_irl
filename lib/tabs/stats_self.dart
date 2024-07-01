@@ -11,14 +11,14 @@ import '../services/game.dart';
 import '../services/auth.dart';
 import '../screens/game_review.dart';
 
-class StatsTab extends StatefulWidget{
-  const StatsTab({super.key});
+class StatsSelfTab extends StatefulWidget{
+  const StatsSelfTab({super.key});
 
   @override
-  State<StatsTab> createState() => _StatsTab();
+  State<StatsSelfTab> createState() => _StatsSelfTab();
 }
 
-class _StatsTab extends State<StatsTab>{
+class _StatsSelfTab extends State<StatsSelfTab>{
   late Future<List<Game>> gamesFuture;
 
   @override 
