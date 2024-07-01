@@ -59,7 +59,7 @@ class Game{
 
   double timeRatio(){
     double tTak = timeTaken().inSeconds.toDouble();
-    return tTak / timeLimit;
+    return tTak / (timeLimit * 60);
   }
 
   double distanceRatio(){
@@ -70,6 +70,8 @@ class Game{
   int timedScore(){
     double dRat = distanceRatio();
     double tRat = timeRatio();
+    print(dRat);
+    print(tRat);
     double score = exp(-tRat) * max(0, cos(dRat * pi)) * 1000;
     return score.ceil(); 
   }
@@ -89,9 +91,8 @@ class Game{
       return timedScore(); 
     }else if(gameType == 'completion'){
       return completionScore();
-    }else{
-      return -1;
     }
+    return -1;
   }
 
   Map<String, dynamic> positionLoc(Position pos){

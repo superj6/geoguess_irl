@@ -90,12 +90,13 @@ class PlayTimedTab extends StatelessWidget{
 		    if (value == null || value.isEmpty) {
 		      return 'Time limit required';
 		    }
-		    int timeLimit = int.parse(radiusLimitController.text);
+		    int timeLimit = int.parse(timeLimitController.text);
 		    if(timeLimit < 1){
-		      return 'Time limit must be at least 1';
+		      return 'Time limit must be at least 1min';
 		    }
+                    print(timeLimit);
                     if(timeLimit > 60){
-                      return 'Time limit must be at most 60';
+                      return 'Time limit must be at most 60min';
                     }
 		    return null;
 		  },
