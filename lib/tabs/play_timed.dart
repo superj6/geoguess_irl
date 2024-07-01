@@ -94,6 +94,9 @@ class PlayTimedTab extends StatelessWidget{
 		    if(timeLimit < 1){
 		      return 'Time limit must be at least 1';
 		    }
+                    if(timeLimit > 60){
+                      return 'Time limit must be at most 60';
+                    }
 		    return null;
 		  },
 		),

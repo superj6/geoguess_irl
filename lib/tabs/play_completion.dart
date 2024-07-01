@@ -14,7 +14,7 @@ class PlayCompletionTab extends StatelessWidget{
 
   void startGame(BuildContext context, int radiusLimit){
     Game game = Game(
-      timeLimit: 0, 
+      timeLimit: 60, 
       radiusLimit: radiusLimit,
       gameType: 'completion', 
     );
@@ -88,7 +88,7 @@ class PlayCompletionTab extends StatelessWidget{
 		      return 'Radius limit required';
 		    }
 		    int radiusLimit = int.parse(radiusLimitController.text);
-		    if(radiusLimit < 50){
+		    if(radiusLimit < 75){
 		      return 'Radius limit must be at least 50';
 		    }
 		    return null;

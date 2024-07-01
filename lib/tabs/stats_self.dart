@@ -98,7 +98,7 @@ class _StatsSelfTab extends State<StatsSelfTab>{
 			  );
 			},
 			child: SizedBox(
-			  width: 216.0,
+			  width: 256.0,
 			  child: Column(
 			    children: [
 			      Text(

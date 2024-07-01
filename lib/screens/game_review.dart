@@ -91,8 +91,9 @@ class _GameReviewScreen extends State<GameReviewScreen>{
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text('Radius Limit: ${game.radiusLimit}m'),
-                Text('Time Limit: ${game.timeLimit}min'),
+                Text('RL: ${game.radiusLimit}m'),
+                Text('TL: ${game.timeLimit}min'),
+                Text('Type: ${game.gameType}'),
               ],
             ),
             Row(

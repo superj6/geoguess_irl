@@ -113,8 +113,9 @@ class _GameScreen extends State<GameScreen>{
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text('Radius Limit: ${game.radiusLimit}m'),
-                Text('Time Limit: ${game.timeLimit}min'),
+                Text('RL: ${game.radiusLimit}m'),
+                Text('TL: ${game.timeLimit}min'),
+                Text('Type: ${game.gameType}'),
               ],
             ),
             FutureBuilder<Game>(
@@ -123,7 +124,7 @@ class _GameScreen extends State<GameScreen>{
 		if(!snapshot.hasData){
 		  return Column(
 		    children: [
-		      Text('Time Left: ${game.timeLimit}:00'),
+		      Text('Loading...'),
 		      SizedBox(
 			width: 300,
 			height: 300,
@@ -135,17 +136,25 @@ class _GameScreen extends State<GameScreen>{
 		return Column(
 		  children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Time Left: '),
+		      mainAxisAlignment: MainAxisAlignment.center,
+		      children: [
+			Text('Time left: '),
 			TimerCountdown(
 			  format: CountDownTimerFormat.minutesSeconds,
-			  endTime: game.startTime!.add(Duration(minutes: game.timeLimit)),
+			  endTime: DateTime.now().add(Duration(minutes: game.timeLimit)),
 			  enableDescriptions: false,
 			  spacerWidth: 0,
+                          onEnd: (){
+                            game.getGameStats().then((_){
+			      Navigator.pushReplacement(
+				context,
+				MaterialPageRoute(builder: (context) => GameReviewScreen(game: game)),
+			      );
+                            });
+                          },
 			),
-                      ],
-                    ),
+		      ],
+		    ),
 		    CarouselSlider(
 		      options: CarouselOptions(height: 300.0),
 		      items: [0, 90, 180, 270].map((i){ 
@@ -219,7 +228,7 @@ class _GameScreen extends State<GameScreen>{
 		),
 		FutureBuilder(
 		  future: gameFuture.future.then((game){
-                    Duration durTime = game.startTime!
+                    Duration durTime = DateTime.now()
                         .add(Duration(seconds: 15))
                         .difference(DateTime.now());
                     return Future.delayed(durTime);

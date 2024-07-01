@@ -68,7 +68,6 @@ class Game{
   }
 
   int timedScore(){
-    if(endPos == null) return -1;
     double dRat = distanceRatio();
     double tRat = timeRatio();
     double score = exp(-tRat) * max(0, cos(dRat * pi)) * 1000;
@@ -76,12 +75,16 @@ class Game{
   }
 
   int completionScore(){
+    double dToSol = distanceBetweenPositions(endPos!, solPos!);
+    if(dToSol > 25) return 0;
     double tTak = timeTaken().inSeconds.toDouble();
     double score = exp(-tTak / radiusLimit) * 1000;
     return score.ceil();
   }
 
   int score(){
+    if(solPos == null) return -1;
+    if(endPos == null) return 0;
     if(gameType == 'timed'){
       return timedScore(); 
     }else if(gameType == 'completion'){
@@ -114,6 +117,20 @@ class Game{
       return addJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to start game');
+    }
+  }
+  
+  Future<Game> getGameStats() async{
+    final response = await http.get(
+      Uri.parse('${gameUrl}/api/game/${gameId}/stats'),
+      headers: <String, String>{
+      },
+    );
+
+    if(response.statusCode == 200){
+      return addJson(jsonDecode(response.body)); 
+    }else{
+      throw Exception('Failed to get user games');
     }
   }
 
@@ -169,7 +186,6 @@ Future<List<Game>> getUserGames(User currentUser) async{
   );
 
   if(response.statusCode == 200){
-    print(jsonDecode(response.body).map((data) => Game.fromJson(data))); 
     return List.from(jsonDecode(response.body).map((data) => Game.fromJson(data))); 
   }else{
     throw Exception('Failed to get user games');
