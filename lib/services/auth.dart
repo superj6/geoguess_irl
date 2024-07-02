@@ -83,10 +83,10 @@ class UserProvider extends ChangeNotifier {
       },
     );
 
-    if (response.statusCode == 200) {
-      removeCurrentUser();
-    } else {
+    if(response.statusCode != 200){
       print('invalid logout');
     }
+
+    removeCurrentUser();
   }
 }
