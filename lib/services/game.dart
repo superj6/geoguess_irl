@@ -70,8 +70,6 @@ class Game{
   int timedScore(){
     double dRat = distanceRatio();
     double tRat = timeRatio();
-    print(dRat);
-    print(tRat);
     double score = exp(-tRat) * max(0, cos(dRat * pi)) * 1000;
     return score.ceil(); 
   }
@@ -195,7 +193,7 @@ Future<List<Game>> getUserGames(User currentUser) async{
 
 Future<List<Game>> getUserScores(User currentUser, String username) async{
   final response = await http.get(
-    Uri.parse('${gameUrl}/api/user/scores?username=${username}'),
+    Uri.parse('${gameUrl}/api/user/${username}/scores'),
     headers: <String, String>{
       'Cookie': currentUser.sessionCookie,
     },

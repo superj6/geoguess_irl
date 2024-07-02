@@ -34,8 +34,8 @@ class HomeScreen extends StatelessWidget{
                     'Geoguess irl',
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
-                  RichText(
-                    text: TextSpan(
+                  Text.rich(
+                    TextSpan(
 		      style: Theme.of(context).textTheme.headlineSmall,
                       children: [
                         TextSpan(text: 'Hello '),

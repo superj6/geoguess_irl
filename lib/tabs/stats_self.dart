@@ -36,7 +36,7 @@ class _StatsSelfTab extends State<StatsSelfTab>{
           Column(
             children: [
               Text(
-                'Overview',
+                'Your Overview',
 		style: Theme.of(context).textTheme.headlineLarge,
               ),
 	      FutureBuilder<List<Game>>(
@@ -64,7 +64,7 @@ class _StatsSelfTab extends State<StatsSelfTab>{
           Column(
             children: [
 	      Text(
-		'Games',
+		'Your Games',
 		style: Theme.of(context).textTheme.headlineLarge,
 	      ), 
 	      Text('Click to view more details.'),

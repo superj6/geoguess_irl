@@ -19,16 +19,9 @@ class StatsLookupTab extends StatefulWidget{
 }
 
 class _StatsLookupTab extends State<StatsLookupTab>{
-  late Future<List<Game>> gamesFuture;
+  String? username;
   final _formKey = GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
-
-  @override 
-  void initState(){
-    super.initState();
-    User currentUser = context.read<UserProvider>().currentUser!;
-    gamesFuture = getUserGames(currentUser);
-  }
 
   @override
   Widget build(BuildContext context){
@@ -47,10 +40,6 @@ class _StatsLookupTab extends State<StatsLookupTab>{
 		  children: [
 		    TextFormField(
 		      scrollPadding: EdgeInsets.only(bottom: 128),
-		      keyboardType: TextInputType.number,
-		      inputFormatters: <TextInputFormatter>[
-			FilteringTextInputFormatter.digitsOnly
-		      ],
 		      controller: usernameController,
 		      decoration: InputDecoration(
 			hintText: 'username',
@@ -65,7 +54,9 @@ class _StatsLookupTab extends State<StatsLookupTab>{
                     ElevatedButton(
                       onPressed: (){
                         if(_formKey.currentState!.validate()){
-
+                          setState((){
+                            username = usernameController.text;
+                          });
                         }
                       },
                       child: Text('Get Stats'),
@@ -74,22 +65,51 @@ class _StatsLookupTab extends State<StatsLookupTab>{
 		),
               ),
               SizedBox(height: 16.0),
-	      FutureBuilder<List<Game>>(
-		future: gamesFuture,
-		builder: (context, snapshot){
-		  if(!snapshot.hasData){
-		    return CircularProgressIndicator();
+	      Builder(
+		builder: (context){
+		  if(username == null){
+		    return Text('Search by username to see stats.');
 		  }
-		  List<Game> games = snapshot.data!;
-                  
-                  List<Game> timedGames = games.where((game) => game.gameType == 'timed').toList();
-                  List<Game> completionGames = games.where((game) => game.gameType == 'completion').toList();
+
+                  User currentUser = context.read<UserProvider>().currentUser!;
+                  Future<List<Game>> gamesFuture = getUserScores(currentUser, username!);
                   return Column(
                     children: [
-                      GamesOverview(title: 'Timed', games: timedGames),
-                      SizedBox(height: 8.0),
-                      GamesOverview(title: 'Completion', games: completionGames),
-                    ],
+                      Text.rich(
+                        TextSpan(
+                          style: Theme.of(context).textTheme.headlineLarge,
+                          children: [
+                            TextSpan(
+                              text: '${username}',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "'s Overview",
+                            ),
+                          ],
+                        ),
+                      ),
+                      FutureBuilder<List<Game>>(
+                        future: gamesFuture,
+                        builder: (context, snapshot){
+                          if(snapshot.connectionState == ConnectionState.waiting){
+                            return CircularProgressIndicator();
+                          }
+                          List<Game> games = snapshot.data!;
+			  List<Game> timedGames = games.where((game) => game.gameType == 'timed').toList();
+			  List<Game> completionGames = games.where((game) => game.gameType == 'completion').toList();
+                          return Column(
+                            children: [
+			      GamesOverview(title: 'Timed', games: timedGames),
+			      SizedBox(height: 8.0),
+			      GamesOverview(title: 'Completion', games: completionGames),
+			    ],
+                          );
+                        },
+                      ),
+	            ],
                   );  
                 },
               ),
