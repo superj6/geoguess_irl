@@ -73,11 +73,23 @@ class _LoginScreen extends State<LoginScreen>{
 		  SizedBox(height: 10),
 		  ElevatedButton(
 		    onPressed: () {
-		      if (_formKey.currentState!.validate()) {
+		      if(_formKey.currentState!.validate()){
 			context.read<UserProvider>().loginUser(
 			  username: usernameController.text,
 			  password: passwordController.text,
-			).then((_) => Navigator.pop(context));
+			)
+                        .then((_) => Navigator.pop(context))
+                        .catchError((e){
+                          SnackBar snackBar = SnackBar(
+                            content: Text(
+                              '${e}',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
 		      }
 		    },
 		    child: Text('Login'),

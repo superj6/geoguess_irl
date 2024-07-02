@@ -95,7 +95,19 @@ class _RegisterScreen extends State<RegisterScreen>{
 			context.read<UserProvider>().registerUser(
 			  username: usernameController.text,
 			  password: passwordController.text,
-			).then((_) => Navigator.pop(context));
+			)
+                        .then((_) => Navigator.pop(context))
+                        .catchError((e){
+                          SnackBar snackBar = SnackBar(
+                            content: Text(
+                              '${e}',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
 		      }
 		    },
 		    child: Text('Register'),

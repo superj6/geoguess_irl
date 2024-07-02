@@ -45,7 +45,7 @@ class UserProvider extends ChangeNotifier {
       User user = User(username: username, sessionCookie: sessionCookie);
       setCurrentUser(user);
     } else {
-      print('invalid login');
+      throw Exception('invalid login, wrong user/pass');
     }
   }
 
@@ -69,7 +69,7 @@ class UserProvider extends ChangeNotifier {
       User user = User(username: username, sessionCookie: sessionCookie);
       setCurrentUser(user);
     } else {
-      print('invalid register');
+      throw Exception('invalid register, dup user');
     }
   }
 
