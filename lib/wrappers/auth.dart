@@ -11,10 +11,9 @@ class AuthWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = context.watch<UserProvider>().currentUser;
-    print(user);
 
     if(user == null){
-      //see if user in storage
+      context.watch<UserProvider>().getUserFromStorage();
     }
   
     if (user != null) return HomeScreen();

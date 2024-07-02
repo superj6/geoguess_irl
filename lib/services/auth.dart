@@ -11,21 +11,43 @@ class User {
   final String sessionCookie;
 
   User({required this.username, required this.sessionCookie});
+
+  User.fromJson(Map<String, dynamic> json) 
+      : username = json['username'], 
+        sessionCookie = json['sessionCookie'];
+
+  Map<String, dynamic> toJson() => {
+        'username': username,
+        'sessionCookie': sessionCookie,
+      };
 }
 
 class UserProvider extends ChangeNotifier {
   User? _currentUser;
+  final _storage = const FlutterSecureStorage();
 
   User? get currentUser => _currentUser;
 
   void setCurrentUser(User newUser) {
     _currentUser = newUser;
+    _storage.write(key: "currentUser", value: jsonEncode(_currentUser!.toJson()));
     notifyListeners();
   }
 
   void removeCurrentUser() {
     _currentUser = null;
+    _storage.delete(key: 'currentUser');
     notifyListeners();
+  }
+
+  void getUserFromStorage(){
+    _storage.read(key: 'currentUser').then((user){
+      print(user);
+      if(user != null){
+         _currentUser = User.fromJson(jsonDecode(user));
+         notifyListeners();
+      }
+    });
   }
 
   Future<void> loginUser({required String username, required String password}) async{
