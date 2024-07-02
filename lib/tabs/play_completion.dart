@@ -89,8 +89,11 @@ class PlayCompletionTab extends StatelessWidget{
 		    }
 		    int radiusLimit = int.parse(radiusLimitController.text);
 		    if(radiusLimit < 75){
-		      return 'Radius limit must be at least 50';
+		      return 'Radius limit must be at least 75m';
 		    }
+                    if(radiusLimit > 4000){
+                      return 'Radius limit must be at most 4000m';
+                    }
 		    return null;
 		  },
 		),
