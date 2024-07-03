@@ -25,6 +25,7 @@ class GamesOverview extends StatelessWidget{
               return Text('No games played yet...');
             }
             games.sort((x, y) => x.startTime!.compareTo(y.startTime!));
+            List<Game> gamesLast5 = games.reversed.take(5).toList();
             Duration gameTimeDur = games.length > 1 ? games.last.startTime!.difference(games.first.startTime!) : Duration(minutes: 1);
             List<FlSpot> gameScoreSpots = games.map((game) => FlSpot(
 	      game.startTime!.millisecondsSinceEpoch.toDouble(), 
@@ -39,6 +40,7 @@ class GamesOverview extends StatelessWidget{
 		    Text('Avg Score: ${gameListScoreAvg(games).toStringAsFixed(1)}'),
 		  ],
 		),
+                Text('Avg Last 5: ${gameListScoreAvg(gamesLast5)}'),
 		SizedBox(height: 16.0),
 		Container(
 		  margin: EdgeInsets.only(right: 12.0), 
