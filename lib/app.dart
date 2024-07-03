@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+      create: (_) => UserProvider(),
       child: MaterialApp(
 	title: 'Geoguess irl',
         theme: ThemeData(

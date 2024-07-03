@@ -42,7 +42,6 @@ class UserProvider extends ChangeNotifier {
 
   void getUserFromStorage(){
     _storage.read(key: 'currentUser').then((user){
-      print(user);
       if(user != null){
          _currentUser = User.fromJson(jsonDecode(user));
          notifyListeners();
