@@ -48,8 +48,12 @@ class _GameScreen extends State<GameScreen>{
         controller.animateCamera(CameraUpdate.newCameraPosition(curCamPos));  
       });
 
-      game.startPos = pos;
-      gameFuture.complete(game.start(currentUser));
+      if(game.gameId == null){
+        game.startPos = pos;
+        gameFuture.complete(game.start(currentUser));
+      }else{
+        gameFuture.complete(game);
+      }
     });
   }
 
@@ -141,7 +145,7 @@ class _GameScreen extends State<GameScreen>{
 			Text('Time left: '),
 			TimerCountdown(
 			  format: CountDownTimerFormat.minutesSeconds,
-			  endTime: DateTime.now().add(Duration(minutes: game.timeLimit)),
+			  endTime: game.startTime!.add(Duration(minutes: game.timeLimit)),
 			  enableDescriptions: false,
 			  spacerWidth: 0,
                           onEnd: (){
@@ -199,8 +203,8 @@ class _GameScreen extends State<GameScreen>{
               builder: (context, snapshot){
                 if(snapshot.hasData) updateMap(snapshot.data!);
 		return SizedBox(
-		  width: 300,
-		  height: 300,
+		  width: 275,
+		  height: 275,
 		  child: GoogleMap(
 		    mapType: MapType.hybrid,
 		    initialCameraPosition: CameraPosition(
@@ -228,7 +232,7 @@ class _GameScreen extends State<GameScreen>{
 		),
 		FutureBuilder(
 		  future: gameFuture.future.then((game){
-                    Duration durTime = DateTime.now()
+                    Duration durTime = game.startTime!
                         .add(Duration(seconds: 15))
                         .difference(DateTime.now());
                     return Future.delayed(durTime);
