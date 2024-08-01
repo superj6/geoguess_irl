@@ -7,4 +7,4 @@ This is the flutter ui for the app.
 
 The server repo is located at <https://github.com/superj6/geoguess-irl-server>
 
-To build in release mode seems u need to replace "mapsApiKey" with actual value instead of .env placeholder, idk why.
+Insert maps api key in base directory '.env' as "MAPS\_API\_KEY"

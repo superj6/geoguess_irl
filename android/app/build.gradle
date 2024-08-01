@@ -4,6 +4,7 @@ plugins {
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
+apply from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file("local.properties")
@@ -30,7 +31,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace = "com.example.geoguess_irl"
+    namespace = "com.jgon.geoguess_irl"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -41,14 +42,13 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.geoguess_irl"
+        applicationId = "com.jgon.geoguess_irl"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
-        manifestPlaceholders += [mapsApiKey: "$System.env.MAPS_API_KEY"]
     }
 
     signingConfigs {

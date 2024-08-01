@@ -1,0 +1,1 @@
+-keep class com.jgon.geoguess_irl.BuildConfig { *; }
